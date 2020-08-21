@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Internal;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing.Matching;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using StudentManagement.Data;
+using StudentManagement.Data.Global;
+using StudentManagement.Data.Mappings;
+using StudentManagement.Data.Repository;
+using StudentManagement.Data.Services;
 
 namespace StudentManagementAPI
 {
@@ -38,8 +37,26 @@ namespace StudentManagementAPI
                     Description = "API for Student Management",
                 });
             });
+            services.AddDbContext<SMSContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("SMSContext"));
+            });
+            ConfigureDependencyInjection(services);
+            Global.ConfigureMapper(services);
+            services.AddSwaggerGenNewtonsoftSupport();
+        }
+        public void ConfigureDependencyInjection(IServiceCollection services)
+        {
+            services.AddScoped<UnitOfWork>()
+                .AddScoped<DbContext, SMSContext>()
+                .AddScoped<IUnitOfWork, UnitOfWork>()
+                .AddScoped<IStudentRepository, StudentRepository>()
+                .AddScoped<IClassRepository, ClassRepository>()
+                .AddScoped<IClassService, ClassService>()
+                .AddScoped<IStudentService, StudentService>();
         }
 
+      
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {

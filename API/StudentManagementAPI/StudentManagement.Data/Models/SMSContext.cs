@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace StudentManagementAPI.Models
+namespace StudentManagement.Data
 {
     public partial class SMSContext : DbContext
     {
@@ -23,7 +23,7 @@ namespace StudentManagementAPI.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost;Database=SMS;Persist Security Info=True;User id=sa; Password=123456");
+                //optionsBuilder.UseSqlServer("Server=localhost;Database=SMS;Persist Security Info=True;User id=sa; Password=123456");
             }
         }
 
@@ -33,8 +33,6 @@ namespace StudentManagementAPI.Models
 
             modelBuilder.Entity<Class>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.EndDate).HasColumnType("date");
 
                 entity.Property(e => e.Name)
