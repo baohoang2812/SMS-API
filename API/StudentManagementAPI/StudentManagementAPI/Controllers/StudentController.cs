@@ -27,6 +27,26 @@ namespace StudentManagementAPI.Controllers
             return BadRequest();
         }
 
+        // GET: api/<StudentController>/count
+        [HttpGet("count")]
+        public IActionResult GetCount()
+        {
+            try
+            {
+                var result = _studentService.GetCount();
+                return Ok(new ApiResult
+                {
+                    Code = ResultCode.Ok,
+                    Message = ResultCode.Ok.DisplayName(),
+                    Data = result
+                });
+            }
+            catch (Exception e)
+            {
+                return Error(e);
+            }
+        }
+
         // POST api/<StudentController>
         [HttpPost]
         public IActionResult Post(StudentCreateViewModel model)

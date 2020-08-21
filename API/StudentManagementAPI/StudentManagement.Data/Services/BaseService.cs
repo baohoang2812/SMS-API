@@ -15,6 +15,7 @@ namespace StudentManagement.Data.Services
         E Remove(E entity);
         E Create(IBaseViewModel<E> viewModel);
         E FindByKey(K key);
+        int GetCount();
     }
     public abstract class BaseService<E, K> : IBaseService<E, K>
     {
@@ -42,6 +43,11 @@ namespace StudentManagement.Data.Services
             return baseRepository.Get();
         }
 
+        public int GetCount()
+        {
+            return baseRepository.Count();
+        }
+
         public E Remove(K key)
         {
             var entity = baseRepository.FindByKey(key);
@@ -57,7 +63,6 @@ namespace StudentManagement.Data.Services
         {
             var foundEntity = FindByKey(key);
             return viewModel.CopyToEntity(viewModel, foundEntity);
-            //return baseRepository.Update(viewModel.CopyToEntity(viewModel, foundEntity));
         }
     }
 }

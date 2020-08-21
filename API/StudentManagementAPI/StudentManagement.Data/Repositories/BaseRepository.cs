@@ -15,6 +15,7 @@ namespace StudentManagement.Data.Repository
         int SaveChanges();
         void CreateRange(IEnumerable<E> entityList);
         E Attach(E entity);
+        int Count();
     }
     public abstract class BaseRepository<E, K> : IBaseRepository<E, K> where E : class
     {
@@ -69,6 +70,11 @@ namespace StudentManagement.Data.Repository
         public E Attach(E entity)
         {
             return context.Attach(entity).Entity;
+        }
+
+        public int Count()
+        {
+            return dbSet.Count();
         }
     }
 }
