@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using StudentManagement.Data.Extensions;
 using StudentManagement.Data.Repository;
 using StudentManagement.Data.Services;
@@ -9,6 +12,7 @@ using System;
 
 namespace StudentManagementAPI.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/students")]
     [ApiController]
     public class StudentController : BaseController
@@ -22,9 +26,24 @@ namespace StudentManagementAPI.Controllers
 
         // GET: api/<StudentController>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string name, int capacity, int pageIndex, string className)
         {
-            return BadRequest();
+            if(capacity == 0 || pageIndex == 0)  return BadRequest("capacity and pageIndex must greater than 0");
+            if (className == null) className = "";
+            try
+            {
+                var result = _studentService.GetStudentList(name, capacity, pageIndex, className);
+                return Ok(new ApiResult
+                {
+                    Code = ResultCode.Ok,
+                    Message = ResultCode.Ok.DisplayName(),
+                    Data = result
+                });
+            }
+            catch (Exception e)
+            {
+                return Error(e);
+            }
         }
 
         // GET: api/<StudentController>/count

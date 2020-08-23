@@ -1,16 +1,21 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StudentManagement.Data;
 using StudentManagement.Data.Global;
 using StudentManagement.Data.Mappings;
+using StudentManagement.Data;
+using StudentManagement.Data.Repositories;
 using StudentManagement.Data.Repository;
 using StudentManagement.Data.Services;
+using System.Text;
 
 namespace StudentManagementAPI
 {
@@ -53,7 +58,30 @@ namespace StudentManagementAPI
                 .AddScoped<IStudentRepository, StudentRepository>()
                 .AddScoped<IClassRepository, ClassRepository>()
                 .AddScoped<IClassService, ClassService>()
-                .AddScoped<IStudentService, StudentService>();
+                .AddScoped<IStudentService, StudentService>()
+                .AddScoped<IAdminService, AdminService>()
+                .AddScoped<IAdminRepository, AdminRepository>();
+            var tokenValue = Configuration.GetSection("AppSettings:Token").Value;
+            var url = Configuration.GetSection("AppSettings:Url").Value;
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+               .AddJwtBearer(options =>
+               {
+                   options.SaveToken = true;
+                   options.RequireHttpsMetadata = false;
+                   options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                   {                      
+                       ValidateIssuer = true,
+                       ValidateAudience = true,
+                       ValidAudience = url,
+                       ValidIssuer = url,
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenValue))
+                   };
+               });
         }
 
       
