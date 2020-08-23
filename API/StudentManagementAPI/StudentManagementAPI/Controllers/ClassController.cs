@@ -25,8 +25,7 @@ namespace StudentManagementAPI.Controllers
             _classService = classService;
         }
 
-        // GET: api/<ClassController>
-        [AllowAnonymous]
+        // GET: api/<ClassController>     
         [HttpGet]
         public IActionResult Get(string name, int capacity, int pageIndex)
         {
