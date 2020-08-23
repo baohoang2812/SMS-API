@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
+using StudentManagement.Data;
 using System;
 
 namespace StudentManagement.Data.ViewModels

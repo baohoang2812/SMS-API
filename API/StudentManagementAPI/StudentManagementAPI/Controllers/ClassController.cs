@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Data.Extensions;
 using StudentManagement.Data.Repository;
@@ -11,7 +13,8 @@ using StudentManagement.Data.ViewModels;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace StudentManagementAPI.Controllers
-{
+{   
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/classes")]
     [ApiController]
     public class ClassController : BaseController
@@ -23,10 +26,25 @@ namespace StudentManagementAPI.Controllers
         }
 
         // GET: api/<ClassController>
+        [AllowAnonymous]
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string name, int capacity, int pageIndex)
         {
-            return BadRequest();
+            if (capacity == 0 || pageIndex == 0) return BadRequest("capacity and pageIndex must greater than 0");
+            try
+            {
+                var result = _classService.GetClassList(name, capacity, pageIndex);
+                return Ok(new ApiResult
+                {
+                    Code = ResultCode.Ok,
+                    Message = ResultCode.Ok.DisplayName(),
+                    Data = result
+                });
+            }
+            catch (Exception e)
+            {
+                return Error(e);
+            }           
         }
 
         // GET: api/<ClassController>/count

@@ -15,6 +15,7 @@ namespace StudentManagement.Data
         {
         }
 
+        public virtual DbSet<Admin> Admin { get; set; }
         public virtual DbSet<Class> Class { get; set; }
         public virtual DbSet<Student> Student { get; set; }
 
@@ -30,6 +31,13 @@ namespace StudentManagement.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+
+            modelBuilder.Entity<Admin>(entity =>
+            {
+                entity.Property(e => e.Password).IsUnicode(false);
+
+                entity.Property(e => e.Username).IsUnicode(false);
+            });
 
             modelBuilder.Entity<Class>(entity =>
             {

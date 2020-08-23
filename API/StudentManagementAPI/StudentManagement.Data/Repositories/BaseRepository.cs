@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SQLinq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace StudentManagement.Data.Repository
 {
@@ -11,7 +13,7 @@ namespace StudentManagement.Data.Repository
         E Update(E entity);
         E Remove(E entity);
         E Create(E entity);
-        E FindByKey(K key);
+        E FindByKey(K key);       
         int SaveChanges();
         void CreateRange(IEnumerable<E> entityList);
         E Attach(E entity);
@@ -75,6 +77,6 @@ namespace StudentManagement.Data.Repository
         public int Count()
         {
             return dbSet.Count();
-        }
+        }       
     }
 }
