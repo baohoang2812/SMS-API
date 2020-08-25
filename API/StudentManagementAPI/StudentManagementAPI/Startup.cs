@@ -73,7 +73,7 @@ namespace StudentManagementAPI
                {
                    options.SaveToken = true;
                    options.RequireHttpsMetadata = false;
-                   options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                   options.TokenValidationParameters = new TokenValidationParameters()
                    {                      
                        ValidateIssuer = true,
                        ValidateAudience = true,
@@ -92,6 +92,13 @@ namespace StudentManagementAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowAnyOrigin();
+                builder.AllowCredentials();
+            });
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
