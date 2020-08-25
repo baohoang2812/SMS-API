@@ -12,9 +12,9 @@ namespace StudentManagement.Data.Repository
     }
     public class UnitOfWork : IUnitOfWork
     {
-        protected readonly DbContext dbContext;
+        protected readonly SMSContext dbContext;
 
-        public UnitOfWork(DbContext dbContext)
+        public UnitOfWork(SMSContext dbContext)
         {
             this.dbContext = dbContext;
         }
