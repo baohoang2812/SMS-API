@@ -26,13 +26,13 @@ namespace StudentManagementAPI.Controllers
 
         // GET: api/<StudentController>
         [HttpGet]
-        public IActionResult Get(string name, int capacity, int pageIndex, string className)
+        public IActionResult Get([FromQuery] int[] ids, string name, string className, int capacity = 50, int pageIndex = 1)
         {
-            if(capacity == 0 || pageIndex == 0)  return BadRequest("capacity and pageIndex must greater than 0");
+            if (capacity == 0 || pageIndex == 0) return BadRequest("capacity and pageIndex must greater than 0");
             if (className == null) className = "";
             try
             {
-                var result = _studentService.GetStudentList(name, capacity, pageIndex, className);
+                var result = _studentService.GetStudentList(ids, name, capacity, pageIndex, className);
                 return Ok(new ApiResult
                 {
                     Code = ResultCode.Ok,

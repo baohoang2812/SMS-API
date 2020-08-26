@@ -5,7 +5,7 @@ namespace StudentManagement.Data.Services
 {
     public interface IStudentService : IBaseService<Student, int>
     {
-        List<Student> GetStudentList(string name, int capacity, int index, string className);
+        List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className);
     }
     public class StudentService : BaseService<Student, int>, IStudentService
     {
@@ -15,9 +15,9 @@ namespace StudentManagement.Data.Services
             this.studentRepository = studentRepository;
         }
 
-        public List<Student> GetStudentList(string name, int capacity, int index, string className)
+        public List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className)
         {
-           return studentRepository.GetStudentList(name, capacity, index, className);
+           return studentRepository.GetStudentList(ids, name, capacity, index, className);
         }
     }
 }

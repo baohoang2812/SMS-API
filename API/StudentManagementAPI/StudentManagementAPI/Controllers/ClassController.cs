@@ -27,12 +27,12 @@ namespace StudentManagementAPI.Controllers
 
         // GET: api/<ClassController>     
         [HttpGet]
-        public IActionResult Get(string name, int capacity, int pageIndex)
+        public IActionResult Get([FromQuery] int[] ids, string name, int capacity= 50, int pageIndex = 1)
         {
             if (capacity == 0 || pageIndex == 0) return BadRequest("capacity and pageIndex must greater than 0");
             try
             {
-                var result = _classService.GetClassList(name, capacity, pageIndex);
+                var result = _classService.GetClassList(ids, name, capacity, pageIndex);
                 return Ok(new ApiResult
                 {
                     Code = ResultCode.Ok,

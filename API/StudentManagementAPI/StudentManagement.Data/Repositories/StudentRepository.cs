@@ -7,7 +7,7 @@ namespace StudentManagement.Data.Repository
 {
     public interface IStudentRepository : IBaseRepository<Student, int>
     {
-        List<Student> GetStudentList(string name, int capacity, int index, string className);
+        List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className);
     }
     public class StudentRepository : BaseRepository<Student, int>, IStudentRepository
     {
@@ -17,14 +17,21 @@ namespace StudentManagement.Data.Repository
             context = dbContext;
         }
 
-        public List<Student> GetStudentList(string name, int capacity, int index, string className)
+        public List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className)
         {
-            var listStudent = context.Student
-            .Where(s => (s.FirstName + s.LastName).ToLower()
-            .Contains(name.ToLower()) && s.Class.Name.ToLower().Contains(className.ToLower()))
+            var query = context.Student.AsQueryable();
+            if (ids != null && ids.Length > 0)
+            {
+                query = query.Where(s => ids.Contains(s.Id));
+            }
+            if (name != null)
+            {
+                query = query.Where(s => $"{s.FirstName} {s.LastName}".ToLower()
+                .Contains(name.ToLower()) && s.Class.Name.ToLower().Contains(className.ToLower()));
+            }
+            return query
             .Skip((index - 1) * capacity)
             .Take(capacity).ToList();
-            return listStudent;
         }
     }
 }
