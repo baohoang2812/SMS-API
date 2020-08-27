@@ -13,7 +13,7 @@ using StudentManagement.Data.ViewModels;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace StudentManagementAPI.Controllers
-{   
+{
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/classes")]
     [ApiController]
@@ -27,7 +27,7 @@ namespace StudentManagementAPI.Controllers
 
         // GET: api/<ClassController>     
         [HttpGet]
-        public IActionResult Get([FromQuery] int[] ids, string name, int capacity= 50, int pageIndex = 1)
+        public IActionResult Get([FromQuery] int[] ids, string name, int capacity = 50, int pageIndex = 1)
         {
             if (capacity == 0 || pageIndex == 0) return BadRequest("capacity and pageIndex must greater than 0");
             try
@@ -43,7 +43,7 @@ namespace StudentManagementAPI.Controllers
             catch (Exception e)
             {
                 return Error(e);
-            }           
+            }
         }
 
         // GET: api/<ClassController>/count
@@ -60,11 +60,11 @@ namespace StudentManagementAPI.Controllers
                     Data = result
                 });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return Error(e);
             }
-        
+
         }
 
         // POST api/<ClassController>
@@ -73,6 +73,17 @@ namespace StudentManagementAPI.Controllers
         {
             try
             {
+                var startDate = model.StartDate;
+                var endDate = model.EndDate;
+                if (startDate.CompareTo(endDate) >= 0)
+                {
+                    return BadRequest(new ApiResult()
+                    {
+                        Code = ResultCode.BadRequest,
+                        Message = ResultCode.BadRequest.DisplayName(),
+                        Data = null
+                    });
+                }
                 var result = _classService.Create(model);
                 unitOfWork.SaveChanges();
                 return Created($"/api/classes?ids={result.Id}", new ApiResult()
@@ -94,6 +105,17 @@ namespace StudentManagementAPI.Controllers
         {
             try
             {
+                var startDate = model.StartDate;
+                var endDate = model.EndDate;
+                if (startDate.CompareTo(endDate) >= 0)
+                {
+                    return BadRequest(new ApiResult()
+                    {
+                        Code = ResultCode.BadRequest,
+                        Message = ResultCode.BadRequest.DisplayName(),
+                        Data = null
+                    });
+                }
                 var result = _classService.Update(model, id);
                 unitOfWork.SaveChanges();
                 return Ok(new ApiResult()

@@ -22,7 +22,9 @@ namespace StudentManagement.Data.ViewModels
         [Display(Name = StatusCodeName.Created)]
         Created = 201,
         [Display(Name = StatusCodeName.Ok)]
-        Ok = 200
+        Ok = 200,
+        [Display(Name = StatusCodeName.BadRequest)]
+        BadRequest = 400
     }
 
     public static class StatusCodeName
@@ -31,6 +33,7 @@ namespace StudentManagement.Data.ViewModels
         public const string InternalServerError = "Internal Server Error";
         public const string Created = "Created";
         public const string Ok = "Success";
+        public const string BadRequest = "Bad Request";
 
     }
 }
