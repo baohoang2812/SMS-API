@@ -46,6 +46,25 @@ namespace StudentManagementAPI.Controllers
             }
         }
 
+        [HttpGet("profile")]
+        public IActionResult GetProfile([FromQuery] int id)
+        {
+            try
+            {
+                var result = _studentService.GetProfile(id);
+                return Ok(new ApiResult
+                {
+                    Code = ResultCode.Ok,
+                    Message = ResultCode.Ok.DisplayName(),
+                    Data = result
+                });
+            }
+            catch (Exception e)
+            {
+                return Error(e);
+            }
+        }
+
         // GET: api/<StudentController>/count
         [HttpGet("count")]
         public IActionResult GetCount()

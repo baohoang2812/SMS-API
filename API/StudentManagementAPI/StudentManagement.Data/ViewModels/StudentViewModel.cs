@@ -11,32 +11,20 @@ namespace StudentManagement.Data.ViewModels
     }
     public class StudentCreateViewModel : BaseViewModel<Student>
     {
-        [JsonProperty("first_name")]
-        public string FirstName { get; set; }
-        [JsonProperty("last_name")]
+        public string FirstName { get; set; }       
         public string LastName { get; set; }
-        [JsonProperty("address")]
-        public string Address { get; set; }
-        [JsonProperty("dob")]
-        public DateTime? DoB { get; set; }
-        [JsonProperty("phone")]
-        public string Phone { get; set; }
-        [JsonProperty("class_id")]
+        public string Address { get; set; }        
+        public DateTime? DoB { get; set; }       
+        public string Phone { get; set; }       
         public int? ClassId { get; set; }
     }
     public class StudentUpdateViewModel : BaseViewModel<Student>
     {
-        [JsonProperty("first_name")]
-        public string FirstName { get; set; }
-        [JsonProperty("last_name")]
-        public string LastName { get; set; }
-        [JsonProperty("address")]
-        public string Address { get; set; }
-        [JsonProperty("dob")]
-        public DateTime? DoB { get; set; }
-        [JsonProperty("phone")]
-        public string Phone { get; set; }
-        [JsonProperty("class_id")]
+        public string FirstName { get; set; }       
+        public string LastName { get; set; }       
+        public string Address { get; set; }       
+        public DateTime? DoB { get; set; }       
+        public string Phone { get; set; }     
         public int? ClassId { get; set; }
     }
 }

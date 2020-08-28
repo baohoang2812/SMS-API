@@ -8,6 +8,7 @@ namespace StudentManagement.Data.Repository
     public interface IStudentRepository : IBaseRepository<Student, int>
     {
         List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className);
+        Student GetStudentById(int id);
     }
     public class StudentRepository : BaseRepository<Student, int>, IStudentRepository
     {
@@ -15,6 +16,10 @@ namespace StudentManagement.Data.Repository
         public StudentRepository(SMSContext dbContext) : base(dbContext)
         {
             context = dbContext;
+        }
+        public Student GetStudentById(int id)
+        {
+            return context.Student.Where(s => s.Id == id).FirstOrDefault();
         }
 
         public List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className)
