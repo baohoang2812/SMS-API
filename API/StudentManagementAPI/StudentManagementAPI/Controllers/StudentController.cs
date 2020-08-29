@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Azure.Storage.Blob;
+using StudentManagement.Data.Extension;
 using StudentManagement.Data.Extensions;
 using StudentManagement.Data.Repository;
 using StudentManagement.Data.Services;
@@ -103,6 +106,35 @@ namespace StudentManagementAPI.Controllers
                 });
             }
             catch (Exception e)
+            {
+                return Error(e);
+            }
+        }
+
+        [HttpPost("upload")]
+        public IActionResult UploadImage(IFormFile file)
+        {
+            try
+            {
+                if(file == null || file.Length < 0 || !file.IsImage())
+                {
+                    return BadRequest(new ApiResult
+                    {
+                        Code = ResultCode.BadRequest,
+                        Message = $"{ResultCode.BadRequest.DisplayName()}: invalid file, must be an image",
+                    });
+                }
+                CloudBlobContainer blobContainer = BlobStorageService.GetCloudBlobContainer();
+                CloudBlockBlob blob = blobContainer.GetBlockBlobReference(file.FileName);
+                blob.UploadFromStream(file.OpenReadStream());
+                var imagePath = blobContainer.GetBlockBlobReference(file.FileName).Uri;
+                return Ok(new ApiResult
+                {
+                    Message = ResultCode.Ok.DisplayName(),
+                    Code = ResultCode.Ok,
+                    Data = imagePath
+                });
+            }catch(Exception e)
             {
                 return Error(e);
             }

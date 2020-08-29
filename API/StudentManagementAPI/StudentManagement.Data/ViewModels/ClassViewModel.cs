@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using StudentManagement.Data;
-using System;
+﻿using System;
 
 namespace StudentManagement.Data.ViewModels
 {

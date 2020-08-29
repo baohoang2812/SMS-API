@@ -8,6 +8,7 @@ namespace StudentManagement.Data
     public partial class Student
     {
         public int Id { get; set; }
+        public string ImagePath { get; set; }
         [Required]
         [StringLength(200)]
         public string FirstName { get; set; }

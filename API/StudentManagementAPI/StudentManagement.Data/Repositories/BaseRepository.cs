@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SQLinq;
 using System;
 using System.Collections.Generic;
 using System.Linq;

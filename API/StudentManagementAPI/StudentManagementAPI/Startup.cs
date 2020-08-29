@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StudentManagement.Data;
+using StudentManagement.Data.Config;
 using StudentManagement.Data.Global;
-using StudentManagement.Data.Mappings;
-using StudentManagement.Data;
 using StudentManagement.Data.Repositories;
 using StudentManagement.Data.Repository;
 using StudentManagement.Data.Services;
@@ -24,6 +22,7 @@ namespace StudentManagementAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppConfig.SetConfig(configuration);
         }
 
         public IConfiguration Configuration { get; }

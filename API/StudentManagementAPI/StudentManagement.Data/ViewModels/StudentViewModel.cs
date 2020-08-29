@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Newtonsoft.Json;
-using StudentManagement.Data;
+﻿using Newtonsoft.Json;
 using System;
 
 namespace StudentManagement.Data.ViewModels
@@ -11,6 +9,8 @@ namespace StudentManagement.Data.ViewModels
     }
     public class StudentCreateViewModel : BaseViewModel<Student>
     {
+        [JsonProperty("image_path")]
+        public string ImagePath { get; set; }
         [JsonProperty("first_name")]
         public string FirstName { get; set; }
         [JsonProperty("last_name")]
@@ -26,6 +26,8 @@ namespace StudentManagement.Data.ViewModels
     }
     public class StudentUpdateViewModel : BaseViewModel<Student>
     {
+        [JsonProperty("image_path")]
+        public string ImagePath { get; set; }
         [JsonProperty("first_name")]
         public string FirstName { get; set; }
         [JsonProperty("last_name")]

@@ -23,8 +23,6 @@ namespace StudentManagement.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseSqlServer("Server=localhost;Database=SMS;Persist Security Info=True;User id=sa; Password=123456");
             }
         }
 
@@ -55,6 +53,8 @@ namespace StudentManagement.Data
                 entity.Property(e => e.Address).HasMaxLength(500);
 
                 entity.Property(e => e.DoB).HasColumnType("date");
+                entity.Property(e => e.ImagePath)
+                .HasColumnType("nvarchar(max)");
 
                 entity.Property(e => e.FirstName)
                     .IsRequired()
