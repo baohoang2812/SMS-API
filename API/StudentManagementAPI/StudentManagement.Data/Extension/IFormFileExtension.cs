@@ -15,7 +15,7 @@ namespace StudentManagement.Data.Extension
     {
         public static bool IsImage(this IFormFile file)
         {
-            if (file.ContentType.Contains("image"))
+            if (file.Length > 0 && file.ContentType.Contains("image"))
             {
                 return true;
             }
