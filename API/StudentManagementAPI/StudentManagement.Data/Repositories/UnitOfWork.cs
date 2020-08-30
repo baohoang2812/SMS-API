@@ -9,6 +9,8 @@ namespace StudentManagement.Data.Repository
     {
         int SaveChanges();
         void BeginTransaction();
+        void RollbackTransaction();
+        void CommitTransaction();
     }
     public class UnitOfWork : IUnitOfWork
     {
@@ -27,6 +29,11 @@ namespace StudentManagement.Data.Repository
         public void CommitTransaction()
         {
             dbContext.Database.CommitTransaction();
+        }
+
+        public void RollbackTransaction()
+        {
+            dbContext.Database.RollbackTransaction();
         }
 
         public int SaveChanges()
