@@ -10,6 +10,7 @@ using StudentManagement.Data.Services;
 using StudentManagement.Data.ViewModels;
 using System;
 using StudentManagement.Data.Extension;
+using StudentManagement.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -95,7 +96,13 @@ namespace StudentManagementAPI.Controllers
         {
             try
             {
-                var result = _studentService.Update(model, id);
+                Student result = null;
+                if (model.Image != null) { 
+                     result = _studentService.Update(model, id);
+                } else
+                {
+                    result = _studentService.UpdateWithoutImg(model, id);
+                }
                 return Ok(new ApiResult()
                 {
                     Code = ResultCode.Ok,
