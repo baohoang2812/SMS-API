@@ -73,9 +73,10 @@ namespace StudentManagementAPI.Controllers
         {
             try
             {
-                var startDate = model.StartDate;
-                var endDate = model.EndDate;
-                if (startDate.CompareTo(endDate) >= 0)
+                DateTime endDate = default;
+                bool success = DateTime.TryParse(model.StartDate, out var startDate) 
+                               && DateTime.TryParse(model.EndDate, out endDate);
+                if (!success || startDate.CompareTo(endDate) >= 0)
                 {
                     return BadRequest(new ApiResult()
                     {
@@ -84,6 +85,7 @@ namespace StudentManagementAPI.Controllers
                         Data = null
                     });
                 }
+
                 var result = _classService.Create(model);
                 unitOfWork.SaveChanges();
                 return Created($"/api/classes?ids={result.Id}", new ApiResult()
@@ -105,9 +107,10 @@ namespace StudentManagementAPI.Controllers
         {
             try
             {
-                var startDate = model.StartDate;
-                var endDate = model.EndDate;
-                if (startDate.CompareTo(endDate) >= 0)
+                DateTime endDate = default;
+                bool success = DateTime.TryParse(model.StartDate, out var startDate)
+                               && DateTime.TryParse(model.EndDate, out endDate);
+                if (!success || startDate.CompareTo(endDate) >= 0)
                 {
                     return BadRequest(new ApiResult()
                     {

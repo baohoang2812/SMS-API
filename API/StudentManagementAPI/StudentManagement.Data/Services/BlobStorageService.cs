@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.WindowsAzure.ServiceRuntime;
 using StudentManagement.Data.Config;
 using System;
 using System.Collections.Generic;
