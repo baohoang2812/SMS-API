@@ -9,6 +9,7 @@ using StudentManagement.Data.Repository;
 using StudentManagement.Data.Services;
 using StudentManagement.Data.ViewModels;
 using System;
+using System.Text.RegularExpressions;
 using StudentManagement.Data.Extension;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -75,6 +76,16 @@ namespace StudentManagementAPI.Controllers
         {
             try
             {
+                var match = Regex.Match(model.Phone, "/^0[0-9]{8}$/");
+                if (!match.Success)
+                {
+                    return BadRequest(new ApiResult()
+                    {
+                        Code = ResultCode.BadRequest,
+                        Message = ResultCode.BadRequest.DisplayName(),
+                        Data = null
+                    });
+                }
                 var result = _studentService.Create(model);
                 return Created($"/api/students?ids={result.Id}", new ApiResult()
                 {
@@ -95,6 +106,16 @@ namespace StudentManagementAPI.Controllers
         {
             try
             {
+                var match = Regex.Match(model.Phone, "/^0[0-9]{8}$/");
+                if (!match.Success)
+                {
+                    return BadRequest(new ApiResult()
+                    {
+                        Code = ResultCode.BadRequest,
+                        Message = ResultCode.BadRequest.DisplayName(),
+                        Data = null
+                    });
+                }
                 var result = _studentService.Update(model, id);
                 return Ok(new ApiResult()
                 {
