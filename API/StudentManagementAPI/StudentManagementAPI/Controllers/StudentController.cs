@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Storage.Blob;
-using StudentManagement.Data.Extension;
 using StudentManagement.Data.Extensions;
 using StudentManagement.Data.Repository;
 using StudentManagement.Data.Services;
 using StudentManagement.Data.ViewModels;
 using System;
+using StudentManagement.Data.Extension;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
