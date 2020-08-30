@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StudentManagement.Data.ViewModels;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace StudentManagement.Data.Repository
     public interface IStudentRepository : IBaseRepository<Student, int>
     {
         List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className);
+        Student UpdateWithoutImg(StudentUpdateViewModel model, int id);
     }
     public class StudentRepository : BaseRepository<Student, int>, IStudentRepository
     {
@@ -15,6 +17,20 @@ namespace StudentManagement.Data.Repository
         public StudentRepository(SMSContext dbContext) : base(dbContext)
         {
             context = dbContext;
+        }
+
+        public Student UpdateWithoutImg(StudentUpdateViewModel model, int id)
+        {
+            var selectedStudent = context.Student.Where(s => s.Id == id).FirstOrDefault();
+            selectedStudent.FirstName = model.FirstName;
+            selectedStudent.DoB = model.DoB;
+            selectedStudent.Address = model.Address;
+            selectedStudent.ClassId = model.ClassId;
+            selectedStudent.LastName = model.LastName;
+            selectedStudent.Phone = model.Phone;
+            context.Student.Update(selectedStudent);
+            context.SaveChanges();
+            return selectedStudent;
         }
 
         public List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className)

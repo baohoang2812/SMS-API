@@ -13,6 +13,7 @@ namespace StudentManagement.Data.Services
         List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className);
         Student Create(StudentCreateViewModel model);
         Student Update(StudentUpdateViewModel model, int id);
+        Student UpdateWithoutImg(StudentUpdateViewModel model, int id);
     }
     public class StudentService : BaseService<Student, int>, IStudentService
     {
@@ -22,6 +23,11 @@ namespace StudentManagement.Data.Services
         {
             this._studentRepository = studentRepository;
             _unitOfWork = unitOfWork;
+        }
+
+        public Student UpdateWithoutImg(StudentUpdateViewModel model, int id)
+        {
+            return _studentRepository.UpdateWithoutImg(model, id);
         }
 
         public List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className)
