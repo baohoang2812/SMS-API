@@ -28,38 +28,38 @@ namespace StudentManagement.Data.Services
             this.baseRepository = baseRepository;
         }
 
-        public E Create(IBaseViewModel<E> viewModel)
+        public virtual E Create(IBaseViewModel<E> viewModel)
         {
             return baseRepository.Create(viewModel.ToEntity());
         }
 
-        public E FindByKey(K key)
+        public virtual E FindByKey(K key)
         {
             return baseRepository.FindByKey(key);
         }
 
-        public IQueryable<E> Get()
+        public virtual IQueryable<E> Get()
         {
             return baseRepository.Get();
         }
 
-        public int GetCount()
+        public virtual int GetCount()
         {
             return baseRepository.Count();
         }
 
-        public E Remove(K key)
+        public virtual E Remove(K key)
         {
             var entity = baseRepository.FindByKey(key);
             return baseRepository.Remove(entity);
         }
 
-        public E Remove(E entity)
+        public virtual E Remove(E entity)
         {
             return baseRepository.Remove(entity);
         }
 
-        public E Update(IBaseViewModel<E> viewModel, K key)
+        public virtual E Update(IBaseViewModel<E> viewModel, K key)
         {
             var foundEntity = FindByKey(key);
             return viewModel.CopyToEntity(viewModel, foundEntity);

@@ -62,17 +62,17 @@ namespace StudentManagement.Data.Repository
             return entity;
         }
 
-        public void CreateRange(IEnumerable<E> entityList)
+        public virtual void CreateRange(IEnumerable<E> entityList)
         {
             context.AddRange(entityList);
         }
 
-        public E Attach(E entity)
+        public virtual E Attach(E entity)
         {
             return context.Attach(entity).Entity;
         }
 
-        public int Count()
+        public virtual int Count()
         {
             return dbSet.Count();
         }       

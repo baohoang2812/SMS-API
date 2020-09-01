@@ -10,6 +10,7 @@ namespace StudentManagement.Data.Repository
     {
         List<Student> GetStudentList(int[] ids, string name, int capacity, int index, string className);
         Student UpdateWithoutImg(StudentUpdateViewModel model, int id);
+        List<Student> GetStudentByClass(int classId);
     }
     public class StudentRepository : BaseRepository<Student, int>, IStudentRepository
     {
@@ -48,6 +49,11 @@ namespace StudentManagement.Data.Repository
             return query
             .Skip((index - 1) * capacity)
             .Take(capacity).ToList();
+        }
+
+        public List<Student> GetStudentByClass(int classId)
+        {
+            return context.Student.Where(s => s.ClassId == classId).ToList();
         }
     }
 }
