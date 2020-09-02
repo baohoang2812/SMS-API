@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentManagementAPI", "Stu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentManagement.Data", "StudentManagement.Data\StudentManagement.Data.csproj", "{D6D89E60-5A2E-4F9A-878A-93177C2BB163}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentManagement.Tests", "StudentManagement.Tests\StudentManagement.Tests.csproj", "{CE562161-F117-4D1D-823D-4C36377BBC84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

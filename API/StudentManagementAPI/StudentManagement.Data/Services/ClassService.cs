@@ -9,26 +9,26 @@ namespace StudentManagement.Data.Services
     }
     public class ClassService : BaseService<Class, int>, IClassService
     {
-        private IClassRepository _classRepository;
-        private IStudentRepository _studentRepository;
+        private readonly IClassRepository _classRepository;
+        private readonly IStudentRepository _studentRepository;
         public ClassService(IUnitOfWork unitOfWork, IClassRepository classRepository, IStudentRepository studentRepository) : base(unitOfWork, classRepository)
         {
             this._classRepository = classRepository;
             this._studentRepository = studentRepository;
         }
 
-        public List<Class> GetClassList(int[] ids, string name, int capacity, int index)
+        public List<Class> GetClassList(int[] ids, string name, int capacity, int pageIndex)
         {
-            return _classRepository.GetClassList(ids, name, capacity, index);
+            return _classRepository.GetClassList(ids, name, capacity, pageIndex);
         }
-        public override Class Remove(int id)
+        public override Class Remove(int key)
         {
-            var classStudents = _studentRepository.GetStudentByClass(id);
+            var classStudents = _studentRepository.GetStudentByClass(key);
             classStudents.ForEach(s =>
             {
                 s.ClassId = null;
             });
-            return base.Remove(id);
+            return base.Remove(key);
         }
     }
 }
